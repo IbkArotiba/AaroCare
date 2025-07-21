@@ -3,7 +3,7 @@
   command = "npm run build"
 
 [build.environment]
-  NODE_VERSION = "16"
+  NODE_VERSION = "18"
   VITE_APP_NAME = "AaroCare"
   VITE_APP_VERSION = "1.0.0"
   VITE_ENVIRONMENT = "production"
