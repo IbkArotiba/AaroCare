@@ -1,0 +1,24 @@
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "16"
+  VITE_APP_NAME = "AaroCare"
+  VITE_APP_VERSION = "1.0.0"
+  VITE_ENVIRONMENT = "production"
+  VITE_DEBUG = "false"
+  VITE_AWS_REGION = "us-east-2"
+  VITE_COGNITO_USER_POOL_ID = "us-east-2_v8z1UEuK2"
+  VITE_COGNITO_CLIENT_ID = "3qss392inogb773i5103cu4inp"
+
+# Redirects and rewrites for SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[dev]
+  command = "npm run dev"
+  port = 3000
+  publish = "dist"

@@ -8,7 +8,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:3000', // Your React frontend URL
+  origin: process.env.frontend_url || 'http://localhost:3000', // Allow Netlify frontend URL
   credentials: true
 }));
 app.use(express.json());
@@ -114,6 +114,15 @@ app.get('/api/online-users', (req, res) => {
 });
 
 // Health check endpoint
+// Basic root endpoint for Railway health checks
+app.get('/', (req, res) => {
+  res.json({ status: 'OK', message: 'AaroCare API is running' });
+});
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'OK', message: 'Health check passed' });
+});
+
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
