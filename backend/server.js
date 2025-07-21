@@ -8,8 +8,10 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: [process.env.frontend_url || 'http://localhost:3000', '*'], // Allow Netlify frontend URL and temporary allow all for testing
-  credentials: true
+  origin: process.env.frontend_url || 'http://localhost:3000', // Only allow specific origins with credentials
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 
