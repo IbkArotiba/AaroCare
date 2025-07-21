@@ -8,10 +8,16 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: process.env.frontend_url || 'http://localhost:3000', // Allow Netlify frontend URL
+  origin: [process.env.frontend_url || 'http://localhost:3000', '*'], // Allow Netlify frontend URL and temporary allow all for testing
   credentials: true
 }));
 app.use(express.json());
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Express error:', err);
+  res.status(500).json({ error: 'Internal server error', message: err.message });
+});
 
 // Your existing routes and middleware here...
 // For example:
@@ -133,12 +139,25 @@ app.get('/api/health', (req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 5001;
-server.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📱 Frontend should connect to: http://localhost:${PORT}`);
-  console.log(`🔌 Socket.IO server is ready for connections`);
-  console.log(`🧪 Test alerts at: POST http://localhost:${PORT}/api/test-alert`);
-});
+
+try {
+  server.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`📱 Frontend URL: ${process.env.frontend_url || 'http://localhost:3000'}`);
+    console.log(`🔌 Socket.IO server is ready for connections`);
+    console.log(`🔍 Environment: ${process.env.NODE_ENV || 'development'}`);
+    
+    // Log some environment status for debugging
+    console.log('✅ Environment variables loaded:');
+    console.log(`  - AWS_REGION: ${process.env.AWS_REGION ? '✓ Set' : '✗ Missing'}`);
+    console.log(`  - SUPABASE_URL: ${process.env.SUPABASE_URL ? '✓ Set' : '✗ Missing'}`);
+    console.log(`  - JWT_SECRET: ${process.env.JWT_SECRET ? '✓ Set' : '✗ Missing'}`);
+    console.log(`  - frontend_url: ${process.env.frontend_url || 'default'}`);
+  });
+} catch (error) {
+  console.error('❌ Failed to start server:', error);
+  process.exit(1);
+}
 
 // Handle graceful shutdown
 process.on('SIGTERM', () => {
