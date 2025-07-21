@@ -1,0 +1,279 @@
+.dashboard-container {
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: blue;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background-color: #3b82f6;
+  color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:nth-child(2) {
+  background-color: #10b981;
+}
+
+.stat-card:nth-child(3) {
+  background-color: #f59e0b;
+}
+
+.stat-card:nth-child(4) {
+  background-color: #ef4444;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.recent-activity {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-item p {
+  margin: 0;
+  color: #4b5563;
+}
+
+.activity-item strong {
+  color: #1e40af;
+}
+
+.activity-item span {
+  font-size: 0.875rem;
+  color: #9ca3af;
+}
+
+/* Alert System Styles */
+.alerts-section {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+  padding: 16px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.alert-badge {
+  background-color: #ff3b30;
+  color: white;
+  font-size: 0.8rem;
+  border-radius: 12px;
+  padding: 2px 8px;
+  margin-left: 8px;
+  font-weight: bold;
+}
+
+.alerts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.alert-item {
+  display: flex;
+  padding: 12px;
+  border-radius: 8px;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.alert-icon {
+  font-size: 24px;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alert-content {
+  flex: 1;
+}
+
+.alert-message {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.alert-timestamp {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.alert-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.alert-btn {
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.alert-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.alert-critical {
+  border-left: 4px solid #ca0b00;
+}
+
+.alert-high {
+  border-left: 4px solid #cc7000;
+}
+
+.alert-medium {
+  border-left: 4px solid #cca300;
+}
+
+.alert-low {
+  border-left: 4px solid #2a9346;
+}
+
+/* For the specific buttons */
+.alert-btn.acknowledge {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.alert-btn.view {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.alert-btn.dismiss {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.no-alerts {
+  text-align: center;
+  padding: 24px;
+  color: #888;
+  font-style: italic;
+}
+
+/* Animation for new alerts */
+@keyframes alertFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-item {
+  animation: alertFadeIn 0.3s ease forwards;
+}
+
+/* Make the alerts section responsive */
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .activity-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .activity-item span {
+    margin-top: 0.25rem;
+  }
+  
+  .alerts-container {
+    max-height: 300px;
+  }
+  
+  .alert-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .alert-actions {
+    margin-top: 8px;
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
