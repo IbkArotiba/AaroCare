@@ -7,12 +7,22 @@ const SocketServer = require('./sockets/socketServer'); // Fixed path to the Soc
 const app = express();
 
 // Middleware
+// Print environment variables for debugging
+console.log('FRONTEND_URL:', process.env.frontend_url);
+console.log('NODE_ENV:', process.env.NODE_ENV);
+
+// CORS configuration - explicitly include Netlify domain
 app.use(cors({
-  origin: process.env.frontend_url || 'http://localhost:3000', // Only allow specific origins with credentials
+  origin: ['https://aarocare.netlify.app', 'http://localhost:3000'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  optionsSuccessStatus: 200 // For legacy browser support
 }));
+
+// Handle preflight requests explicitly
+app.options('*', cors());
+
 app.use(express.json());
 
 // Error handling middleware
