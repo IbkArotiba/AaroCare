@@ -92,13 +92,24 @@ try {
 }
 
 process.on('SIGTERM', () => {
-  console.log('SIGTERM received, shutting down gracefully');
-  process.exit(0);
+  console.log('SIGTERM received, keeping server alive...');
+  // Don't exit immediately - let Railway handle the shutdown
 });
 
 process.on('SIGINT', () => {
-  console.log('SIGINT received, shutting down gracefully');
+  console.log('SIGINT received, graceful shutdown...');
   process.exit(0);
+});
+
+// Keep the process alive
+const keepAlive = setInterval(() => {
+  console.log('💓 Server heartbeat - uptime:', Math.floor(process.uptime()), 'seconds');
+}, 60000); // Every minute
+
+// Cleanup on exit
+process.on('exit', () => {
+  clearInterval(keepAlive);
+  console.log('Process exiting...');
 });
 
 module.exports = app;
