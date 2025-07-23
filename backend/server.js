@@ -63,7 +63,6 @@ app.get('/api/health', (req, res) => {
 
 console.log('✅ Test routes added');
 
-// Only load auth routes (most essential)
 try {
   console.log('📁 Loading auth routes...');
   app.use('/api/auth', require('./routes/auth'));
@@ -79,7 +78,6 @@ console.log(`  - NODE_ENV: ${process.env.NODE_ENV}`);
 console.log(`  - AWS_REGION: ${process.env.AWS_REGION ? '✓' : '✗ MISSING'}`);
 console.log(`  - SUPABASE_URL: ${process.env.SUPABASE_URL ? '✓' : '✗ MISSING'}`);
 
-// Start server
 try {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Server running on port ${PORT}`);
@@ -93,7 +91,6 @@ try {
   process.exit(1);
 }
 
-// Graceful shutdown
 process.on('SIGTERM', () => {
   console.log('SIGTERM received, shutting down gracefully');
   process.exit(0);
