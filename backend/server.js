@@ -57,28 +57,28 @@ app.use((err, req, res, next) => {
 // Test if routes can be loaded
 try {
   console.log('📁 Loading routes...');
-  app.use('/api/auth', require('./routes/auth'));
+  //app.use('/api/auth', require('./routes/auth'));
   console.log('✅ Auth routes loaded');
   
-  app.use('/api/patients', require('./routes/patients'));
+  //app.use('/api/patients', require('./routes/patients'));
   console.log('✅ Patients routes loaded');
   
-  app.use('/api/statistics', require('./routes/statistics'));
+  //app.use('/api/statistics', require('./routes/statistics'));
   console.log('✅ Statistics routes loaded');
   
-  app.use('/api/vitals', require('./routes/vitals'));
+  //app.use('/api/vitals', require('./routes/vitals'));
   console.log('✅ Vitals routes loaded');
   
-  app.use('/api/notes', require('./routes/notes'));
+  //app.use('/api/notes', require('./routes/notes'));
   console.log('✅ Notes routes loaded');
   
-  app.use('/api/care-teams', require('./routes/careTeam'));
+  //app.use('/api/care-teams', require('./routes/careTeam'));
   console.log('✅ Care team routes loaded');
   
-  app.use('/api/treatment-plans', require('./routes/treatment'));
+  //app.use('/api/treatment-plans', require('./routes/treatment'));
   console.log('✅ Treatment routes loaded');
   
-  app.use('/api/users', require('./routes/users'));
+  //app.use('/api/users', require('./routes/users'));
   console.log('✅ User routes loaded');
   
 } catch (error) {
