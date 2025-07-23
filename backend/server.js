@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 8080;
 console.log('✅ Basic modules loaded successfully');
 
 // Add health routes FIRST (before any middleware)
-app.get('/api/health', (req, res) => {
+app.get('/health', (req, res) => {
   console.log('🏥 Health check requested');
   res.status(200).json({ 
     status: 'OK', 
@@ -19,11 +19,11 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-app.get('/api/', (req, res) => {
+app.get('/', (req, res) => {
   console.log('🏠 Root endpoint requested');
   res.status(200).json({ 
     status: 'OK', 
-    message: 'AaroCareAPI is running',
+    message: 'AaroCare API is running',
     timestamp: new Date().toISOString()
   });
 });
