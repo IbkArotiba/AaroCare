@@ -12,17 +12,17 @@ console.log('✅ Basic modules loaded successfully');
 // Add health routes FIRST (before any middleware)
 app.get('/health', (req, res) => {
   console.log('🏥 Health check requested');
-  res.status(200).json({ 
-    status: 'OK', 
+  res.status(200).json({
+    status: 'OK',
     timestamp: new Date().toISOString(),
-    env: process.env.NODE_ENV 
+    env: process.env.NODE_ENV
   });
 });
 
 app.get('/', (req, res) => {
   console.log('🏠 Root endpoint requested');
-  res.status(200).json({ 
-    status: 'OK', 
+  res.status(200).json({
+    status: 'OK',
     message: 'AaroCare API is running',
     timestamp: new Date().toISOString()
   });
@@ -44,9 +44,21 @@ app.use(express.urlencoded({ extended: true }));
 
 console.log('✅ Basic middleware configured');
 
-// Add a simple test route
+// Add test routes
 app.get('/api/test', (req, res) => {
   res.json({ message: 'Test route working', timestamp: new Date().toISOString() });
+});
+
+// ADD THIS - Railway health check route
+app.get('/api/health', (req, res) => {
+  console.log('🏥 API Health check requested');
+  res.status(200).json({ 
+    status: 'OK', 
+    timestamp: new Date().toISOString(),
+    env: process.env.NODE_ENV,
+    uptime: process.uptime(),
+    service: 'AaroCare API'
+  });
 });
 
 console.log('✅ Test routes added');
@@ -72,6 +84,7 @@ try {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Server running on port ${PORT}`);
     console.log(`🌐 Health check: http://0.0.0.0:${PORT}/health`);
+    console.log(`🏥 API Health check: http://0.0.0.0:${PORT}/api/health`);
     console.log(`🧪 Test endpoint: http://0.0.0.0:${PORT}/api/test`);
     console.log('✅ Minimal server started successfully');
   });
