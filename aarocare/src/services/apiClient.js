@@ -10,7 +10,6 @@ const apiClient = axios.create({
   },
 });
 
-// Request interceptor to add auth token
 apiClient.interceptors.request.use(
   (requestConfig) => {
     const token = localStorage.getItem('authToken');
@@ -18,7 +17,6 @@ apiClient.interceptors.request.use(
       requestConfig.headers.Authorization = `Bearer ${token}`;
     }
     
-    // Log requests in development
     if (config.isDevelopment && config.debug) {
       console.log('🔄 API Request:', {
         method: requestConfig.method?.toUpperCase(),
@@ -37,10 +35,8 @@ apiClient.interceptors.request.use(
   }
 );
 
-// Response interceptor to handle token refresh
 apiClient.interceptors.response.use(
   (response) => {
-    // Log responses in development
     if (config.isDevelopment && config.debug) {
       console.log('✅ API Response:', {
         status: response.status,
@@ -53,7 +49,6 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Log errors in development
     if (config.isDevelopment) {
       console.error('❌ API Error:', {
         status: error.response?.status,

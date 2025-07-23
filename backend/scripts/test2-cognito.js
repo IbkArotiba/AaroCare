@@ -4,7 +4,7 @@ require('dotenv').config();
 
 async function testCognitoIntegration() {
   console.log('🔄 Testing Cognito integration...');
-  try {
+  try { 
     console.log('📋 Step 1: Testing user creation...');
     const testUser = {
       email: 'maxdon.admin@aarocare.com',

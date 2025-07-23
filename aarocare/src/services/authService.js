@@ -1,15 +1,10 @@
 // src/services/authService.js
 import axios from 'axios';
 
-// Use the same logic that works in main.jsx
-const API_URL = import.meta.env.VITE_API_URL || '/api';
-const isProduction = import.meta.env.PROD === true;
+const API_URL = 'https://aarocare-production.up.railway.app/api';
 
-// Only log in development
-if (!isProduction) {
-  console.log('🔍 DEBUG - Direct API_URL:', API_URL);
-  console.log('🔍 DEBUG - VITE_API_URL env var:', import.meta.env.VITE_API_URL);
-}
+console.log('🔍 DEBUG - Direct API_URL:', API_URL);
+console.log('🔍 DEBUG - VITE_API_URL env var:', import.meta.env.VITE_API_URL);
 
 // Create an axios instance with auth token injection
 const api = axios.create({
@@ -22,16 +17,13 @@ const api = axios.create({
 
 // Add detailed debugging to requests
 api.interceptors.request.use(async (config) => {
-  // Only log in development
-  if (!isProduction) {
-    const fullUrl = config.baseURL + config.url;
-    console.log('🔍 REQUEST DEBUG:');
-    console.log('  - Method:', config.method.toUpperCase());
-    console.log('  - Base URL:', config.baseURL);
-    console.log('  - Endpoint:', config.url);
-    console.log('  - Full URL:', fullUrl);
-    console.log('  - Data:', config.data);
-  }
+  const fullUrl = config.baseURL + config.url;
+  console.log('🔍 REQUEST DEBUG:');
+  console.log('  - Method:', config.method.toUpperCase());
+  console.log('  - Base URL:', config.baseURL);
+  console.log('  - Endpoint:', config.url);
+  console.log('  - Full URL:', fullUrl);
+  console.log('  - Data:', config.data);
   
   try {
     const token = localStorage.getItem('authToken');
@@ -47,27 +39,16 @@ api.interceptors.request.use(async (config) => {
 // Add response debugging
 api.interceptors.response.use(
   (response) => {
-    if (!isProduction) {
-      console.log('🔍 RESPONSE SUCCESS:', response.status, response.config.url);
-    }
+    console.log('🔍 RESPONSE SUCCESS:', response.status, response.config.url);
     return response;
   },
   (error) => {
-    if (!isProduction) {
-      console.log('🔍 RESPONSE ERROR:');
-      console.log('  - Status:', error.response?.status);
-      console.log('  - URL:', error.config?.url);
-      console.log('  - Full URL:', error.config?.baseURL + error.config?.url);
-      console.log('  - Error:', error.message);
-      console.log('  - Response data:', error.response?.data);
-    }
-    
-    // Network errors need special handling
-    if (!error.response) {
-      console.error('Network error detected - API may be unreachable');
-      // We could show a user-friendly message here
-    }
-    
+    console.log('🔍 RESPONSE ERROR:');
+    console.log('  - Status:', error.response?.status);
+    console.log('  - URL:', error.config?.url);
+    console.log('  - Full URL:', error.config?.baseURL + error.config?.url);
+    console.log('  - Error:', error.message);
+    console.log('  - Response data:', error.response?.data);
     return Promise.reject(error);
   }
 );

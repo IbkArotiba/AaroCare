@@ -6,7 +6,6 @@ import { io } from 'socket.io-client';
 import { useAuth } from '@/contexts/AuthContext';  
 
 const CareTeam = ({ patientId }) => {
-  // This would work with your real API in production
   const [careTeam, setCareTeam] = useState([]);
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
@@ -26,7 +25,6 @@ const CareTeam = ({ patientId }) => {
     'nurse': 'Nurse'
   };
 
-  // In real app, this would fetch from your API
   const fetchCareTeam = async () => {
     setLoading(true);
     setError(null);
@@ -35,7 +33,6 @@ const CareTeam = ({ patientId }) => {
             console.log(`Fetching care team for patient ${patientId}`);
             const response = await apiClient.get(`/api/patients/${patientId}/care-team`);
             console.log("Patient-specific care team data:", response.data);
-            // Filter out inactive members
             const activeMembers = response.data.filter(member => member.is_active);
             console.log("Active care team members:", activeMembers);
             setCareTeam(activeMembers);
@@ -43,13 +40,11 @@ const CareTeam = ({ patientId }) => {
             console.log("Fetching all care teams");
             const response = await apiClient.get(`/api/care-teams`);
             console.log("All care teams data:", response.data);
-            // Filter out inactive members
             const activeMembers = response.data.filter(member => member.is_active);
             console.log("Active care team members:", activeMembers);
             setCareTeam(activeMembers);
         }
         
-        // Always fetch users and patients for the form
         const [usersResponse, patientsResponse] = await Promise.all([
             apiClient.get(`/api/users`),
             apiClient.get(`/api/patients`)
@@ -64,7 +59,7 @@ const CareTeam = ({ patientId }) => {
     } catch (error) {
         console.error('Error fetching care team:', error);
         setError('Failed to load care team. Please make sure you are logged in.');
-        setCareTeam([]); // Set empty array on error
+        setCareTeam([]); 
     } finally {
         setLoading(false);
     }

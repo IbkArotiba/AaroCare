@@ -8,7 +8,6 @@ const getAllPatientCareTeam = async (req, res) => {
         return res.status(400).json({ message: 'Invalid patient ID' });
       }
       
-      // Get care team assignments
       const careTeamAssignments = await db.query(
         `SELECT * FROM care_teams 
          WHERE patient_id = $1 AND is_active = true
@@ -17,15 +16,13 @@ const getAllPatientCareTeam = async (req, res) => {
       );
       
       if (careTeamAssignments.rows.length === 0) {
-        return res.status(200).json([]); // Return empty array instead of 404
+        return res.status(200).json([]); 
       }
       
-      // Get user and patient details for each assignment
       const careTeamWithDetails = [];
       
       for (const assignment of careTeamAssignments.rows) {
         try {
-          // Get user details
           const user = await db.query(
             `SELECT first_name as staff_first_name, last_name as staff_last_name, 
                     email as staff_email, role as staff_role
