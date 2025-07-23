@@ -19,10 +19,6 @@ router.get('/',
     roleAuth(['doctor', 'nurse', 'admin']), 
     getAllTreatmentPlans
 );
-// Routes expected by tests
-router.post('/patients/:id', authMiddleware, roleAuth(['doctor']), checkPatientAccess, createTreatmentPlan);
-router.get('/patients/:id', authMiddleware, roleAuth(['doctor', 'nurse', 'admin']), checkPatientAccess, getTreatmentPlan);
-router.put('/patients/:id', authMiddleware, roleAuth(['doctor']), checkPatientAccess, updateTreatmentPlan);
-router.delete('/patients/:id/treatment/:planId', authMiddleware, roleAuth(['doctor', 'nurse', 'admin']), checkPatientAccess, deleteTreatmentPlan);
+
 
 module.exports = router;

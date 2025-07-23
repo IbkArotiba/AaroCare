@@ -16,7 +16,6 @@ router.get('/patients/:id/care-team', authMiddleware, roleAuth(['doctor', 'nurse
 router.put('/patients/:id/care-team/:memberId', authMiddleware, roleAuth(['doctor','nurse']), checkPatientAccess, updateCareTeamRole);
 router.delete('/patients/:id/care-team/:memberId', authMiddleware, roleAuth(['doctor','nurse']), checkPatientAccess, removeCareTeamMember);
 
-router.delete('/patients/:patientId/care-team/:memberId', authMiddleware, roleAuth(['doctor','nurse']), removeCareTeamMember);
 
 router.put('/members/:memberId', authMiddleware, roleAuth(['doctor','nurse']), updateCareTeamRole);
 router.delete('/members/:memberId', authMiddleware, roleAuth(['doctor','nurse']), removeCareTeamMember);

@@ -10,7 +10,7 @@
     "test:coverage": "jest --coverage",
     "test:integration": "jest tests/integration --runInBand",
     "test:unit": "jest tests/controllers tests/middleware --testPathIgnorePatterns=tests/integration"
-  },
+  }, 
   "keywords": [],
   "author": "",
   "license": "ISC",
