@@ -65,26 +65,26 @@ try {
   app.use('/api/auth', require('./routes/auth'));
   console.log('✅ Auth routes loaded');
   
-  app.use('/api/patients', require('./routes/patients'));
-  console.log('✅ Patients routes loaded');
+  //app.use('/api/patients', require('./routes/patients'));
+  //console.log('✅ Patients routes loaded');
   
-  app.use('/api/statistics', require('./routes/statistics'));
-  console.log('✅ Statistics routes loaded');
+  //app.use('/api/statistics', require('./routes/statistics'));
+  //console.log('✅ Statistics routes loaded');
   
-  app.use('/api/vitals', require('./routes/vitals'));
-  console.log('✅ Vitals routes loaded');
+  //app.use('/api/vitals', require('./routes/vitals'));
+  //console.log('✅ Vitals routes loaded');
   
-  app.use('/api/notes', require('./routes/notes'));
-  console.log('✅ Notes routes loaded');
+  //app.use('/api/notes', require('./routes/notes'));
+  //console.log('✅ Notes routes loaded');
   
-  app.use('/api/care-teams', require('./routes/careTeam'));
-  console.log('✅ Care team routes loaded');
+  //app.use('/api/care-teams', require('./routes/careTeam'));
+  //console.log('✅ Care team routes loaded');
   
-  app.use('/api/treatment-plans', require('./routes/treatment'));
-  console.log('✅ Treatment routes loaded');
+  //app.use('/api/treatment-plans', require('./routes/treatment'));
+  //console.log('✅ Treatment routes loaded');
   
-  app.use('/api/users', require('./routes/users'));
-  console.log('✅ User routes loaded');
+  //app.use('/api/users', require('./routes/users'));
+  //console.log('✅ User routes loaded');
   
 } catch (error) {
   console.error('❌ Error loading routes:', error.message);
