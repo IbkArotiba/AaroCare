@@ -1,7 +1,7 @@
 // src/services/authService.js
 import axios from 'axios';
 
-const API_URL = 'https://aarocare-production.up.railway.app/api';
+const API_URL = 'https://aarocare.onrender.com/api';
 
 console.log('🔍 DEBUG - Direct API_URL:', API_URL);
 console.log('🔍 DEBUG - VITE_API_URL env var:', import.meta.env.VITE_API_URL);
