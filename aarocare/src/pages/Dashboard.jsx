@@ -223,7 +223,7 @@ const Dashboard = () => {
 
       console.log('Connecting to socket with token:', token.substring(0, 10) + '...');
       
-      const newSocket = io('http://localhost:5001', {
+      const newSocket = io('https://aarocare.onrender.com', {
         auth: { 
           token: token.startsWith('Bearer ') ? token : `Bearer ${token}`
         }
