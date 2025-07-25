@@ -6,19 +6,63 @@ A healthcare management application for streamlined patient care and team coordi
   <img src="./aarocare/src/components/auth/Logo.jpeg" alt="AaroCare Logo" width="200"/>
 </div>
 
+Link to the live demo: https://aarocare.netlify.app
+**Demo Access**:
+
+A demo account is available for testing. Please contact the project team for credentials.
+
 
 
 ## 🎬 Demo
 ![AaroCare Demo](./demos/ezgif.com-crop.gif)
 
-## Features
+## 📖 Table of Contents
+- [✨ Features](#features)
+- [🎬 Demo](#demo)
+- [🏗️ Architecture](#architecture)
+- [🚀 Quick Start](#quick-start)
+- [📱 Screenshots](#screenshots)
+- [🛠️ Tech Stack](#tech-stack)
+- [📊 Database Schema](#database-schema)
+- [🤝 Contributing](#contributing)
+- [📄 License](#license)
 
-- Patient management
-- Care team coordination
-- Authentication with Cognito
-- API integration with backend services
+## ✨ Features
 
-## Setup
+### 🏥 Core Healthcare Management
+- **Patient Registration & Profiles** - Complete patient demographic management
+- **Electronic Health Records** - Digital medical records with history tracking
+- **Vital Signs Monitoring** - Real-time patient vital signs tracking
+- **Treatment Plans** - Comprehensive care planning and tracking
+
+### 👥 Staff & Team Management
+- **Care Team Assignment** - Multi-disciplinary team coordination
+- **Role-Based Access Control** - Secure access based on staff roles
+- **Real-time Collaboration** - Live updates and notifications
+
+### 📊 Advanced Features
+- **Real-time Dashboard** - Live patient statistics and alerts
+- **Notes & Documentation** - Searchable medical notes system
+- **WebSocket Integration** - Real-time updates across the platform
+- **Mobile Responsive** - Works seamlessly on all devices
+
+## 🏗️ Architecture
+
+### Frontend
+- **React** - Modern web framework
+- **Vite** - Fast development environment
+- **Tailwind CSS** - Utility-first CSS framework
+- **React Router** - Client-side routing
+- **Socket.IO** - Real-time communication
+
+### Backend
+- **Node.js** - Server-side runtime
+- **Express** - Web framework
+- **AWS Cognito** - Authentication
+- **Supabase** - Database and authentication
+- **Socket.IO** - Real-time communication
+
+## 🚀 Quick Start
 
 ### Prerequisites
 

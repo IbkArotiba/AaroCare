@@ -7,15 +7,18 @@ async function testCognitoIntegration() {
     try {
         console.log('📋 Step 1: Testing user creation...');
         
+        // Use environment variables instead of hardcoded values
         const testUser = {
-          email: 'test.doctor@aarocare.com',
-          firstName: 'Test',
-          lastName: 'Doctor',
-          role: 'doctor',
-          employeeId: 'TEST001',
-          department: 'Testing',
-          tempPassword: 'TestPass123!'
+          email: process.env.TEST_USER_EMAIL || 'user@example.com',
+          firstName: process.env.TEST_USER_FIRSTNAME || 'Test',
+          lastName: process.env.TEST_USER_LASTNAME || 'User',
+          role: process.env.TEST_USER_ROLE || 'doctor',
+          employeeId: process.env.TEST_USER_ID || 'TEST001',
+          department: process.env.TEST_USER_DEPT || 'Testing',
+          tempPassword: process.env.TEST_USER_PASSWORD || 'ChangeMe123!'
         };
+        
+        console.log('Using test email:', testUser.email);
         const createResult = await cognitoAuth.adminCreateUser(testUser);
         console.log('✅ User created successfully in Cognito');
         console.log('📋 Step 2: Testing user login...');

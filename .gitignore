@@ -46,6 +46,12 @@ yarn-error.log*
 *.sln
 *.sw?
 
+# Scripts with credentials
+backend/scripts/test2-cognito.js
+backend/scripts/*-cognito*.js
+backend/scripts/*-test*.js
+backend/scripts/test-*.js
+
 # Local Netlify folder
 .netlify
 
