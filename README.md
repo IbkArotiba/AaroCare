@@ -2,6 +2,15 @@
 
 A healthcare management application for streamlined patient care and team coordination.
 
+<div align="center">
+  <img src="./aarocare/src/components/auth/Logo.jpeg" alt="AaroCare Logo" width="200"/>
+</div>
+
+
+
+## 🎬 Demo
+![AaroCare Demo](./demos/ezgif.com-crop.gif)
+
 ## Features
 
 - Patient management
