@@ -7,7 +7,6 @@ async function testCognitoIntegration() {
     try {
         console.log('📋 Step 1: Testing user creation...');
         
-        // Use environment variables instead of hardcoded values
         const testUser = {
           email: process.env.TEST_USER_EMAIL || 'user@example.com',
           firstName: process.env.TEST_USER_FIRSTNAME || 'Test',

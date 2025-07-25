@@ -6,7 +6,7 @@
 
 A healthcare management application for streamlined patient care and team coordination.
 
-Link to the live demo: https://aarocare.netlify.app
+Link to the live demo: https://aarocare.netlify.app 
 **Demo Access**:
 
 A demo account is available for testing. Please contact the project team for credentials.
@@ -26,6 +26,7 @@ A demo account is available for testing. Please contact the project team for cre
 - [📊 Database Schema](#database-schema)
 - [🤝 Contributing](#contributing)
 - [📄 License](#license)
+- [👨‍💻 Author](#author)
 
 ## ✨ Features
 
@@ -60,7 +61,24 @@ A demo account is available for testing. Please contact the project team for cre
 - **Express** - Web framework
 - **AWS Cognito** - Authentication
 - **Supabase** - Database and authentication
+- **PostgreSQL** - Relational Database
 - **Socket.IO** - Real-time communication
+
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   React Frontend │────│   Node.js API   │────│   Supabase DB   │
+│                 │    │                 │    │                 │
+│ • Dashboard     │    │ • Authentication│    │ • Patients      │
+│ • Patient Mgmt  │    │ • CRUD APIs     │    │ • Staff         │
+│ • Vitals        │    │ • WebSocket     │    │ • Medical Data  │
+│ • Notes         │    │ • Middleware    │    │ • Audit Logs    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+│                       │                       │
+└───────────────────────┼───────────────────────┘
+│
+┌─────────────────┐
+│   AWS Cognito   │
+│  Authentication │
+└─────────────────┘
 
 ## 🚀 Quick Start
 
@@ -68,6 +86,8 @@ A demo account is available for testing. Please contact the project team for cre
 
 - Node.js
 - npm or yarn
+
+
 
 ### Environment Variables
 
@@ -116,3 +136,245 @@ npm run dev
 ## Security Note
 
 This repository does not contain any sensitive information. All API keys, database credentials, and other secrets should be provided via environment variables and are not committed to version control.
+
+
+## 📊 Database Schema
+
+The database schema is as follows:
+
+```sql
+-- Enable necessary extensions
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- Users table with MedSync roles
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    role VARCHAR(20) CHECK (role IN ('doctor', 'nurse', 'admin')) NOT NULL,
+    employee_id VARCHAR(50) UNIQUE,
+    department VARCHAR(100),
+    phone VARCHAR(20),
+    is_active BOOLEAN DEFAULT true,
+    last_login TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+```sql
+-- Patients table
+CREATE TABLE patients (
+    id SERIAL PRIMARY KEY,
+    medical_record_number VARCHAR(50) UNIQUE NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    date_of_birth DATE NOT NULL,
+    gender VARCHAR(10) CHECK (gender IN ('male', 'female', 'other')),
+    phone VARCHAR(20),
+    email VARCHAR(255),
+    address TEXT,
+    emergency_contact_name VARCHAR(200),
+    emergency_contact_phone VARCHAR(20),
+    emergency_contact_relationship VARCHAR(100),
+    admission_date TIMESTAMP,
+    discharge_date TIMESTAMP,
+    status VARCHAR(20) DEFAULT 'active' CHECK (status IN ('active', 'discharged', 'transferred')),
+    room_number VARCHAR(20),
+    bed_number VARCHAR(20),
+    primary_diagnosis TEXT,
+    allergies JSONB DEFAULT '[]',
+    medications JSONB DEFAULT '[]',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+```sql
+-- Care teams (many-to-many: users assigned to patients)
+CREATE TABLE care_teams (
+    id SERIAL PRIMARY KEY,
+    patient_id INTEGER REFERENCES patients(id) ON DELETE CASCADE,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    role_in_care VARCHAR(50) NOT NULL, -- 'primary_doctor', 'consulting_doctor', 'primary_nurse', etc.
+    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    assigned_by INTEGER REFERENCES users(id),
+    is_active BOOLEAN DEFAULT true,
+    UNIQUE(patient_id, user_id, role_in_care)
+);
+```
+
+```sql
+-- Patient notes (collaborative editing)
+CREATE TABLE patient_notes (
+    id SERIAL PRIMARY KEY,
+    patient_id INTEGER REFERENCES patients(id) ON DELETE CASCADE,
+    author_id INTEGER REFERENCES users(id),
+    title VARCHAR(200),
+    content TEXT NOT NULL,
+    note_type VARCHAR(50) DEFAULT 'general' CHECK (note_type IN ('general', 'diagnosis', 'treatment', 'nursing', 'discharge')),
+    is_private BOOLEAN DEFAULT false,
+    priority VARCHAR(20) DEFAULT 'normal' CHECK (priority IN ('low', 'normal', 'high', 'urgent')),
+    version INTEGER DEFAULT 1,
+    is_locked BOOLEAN DEFAULT false,
+    locked_by INTEGER REFERENCES users(id),
+    locked_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+```sql
+-- Vital signs (nurse updates)
+CREATE TABLE vital_signs (
+    id SERIAL PRIMARY KEY,
+    patient_id INTEGER REFERENCES patients(id) ON DELETE CASCADE,
+    recorded_by INTEGER REFERENCES users(id),
+    blood_pressure_systolic INTEGER,
+    blood_pressure_diastolic INTEGER,
+    heart_rate INTEGER,
+    temperature DECIMAL(5,2),
+    respiratory_rate INTEGER,
+    oxygen_saturation INTEGER,
+    pain_level INTEGER CHECK (pain_level BETWEEN 0 AND 10),
+    weight DECIMAL(5,2),
+    height DECIMAL(5,2),
+    notes TEXT,
+    recorded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+```sql
+-- Treatment plans (doctor creates/updates)
+CREATE TABLE treatment_plans (
+    id SERIAL PRIMARY KEY,
+    patient_id INTEGER REFERENCES patients(id) ON DELETE CASCADE,
+    created_by INTEGER REFERENCES users(id),
+    diagnosis TEXT NOT NULL,
+    treatment_goals TEXT,
+    medications JSONB DEFAULT '[]',
+    procedures JSONB DEFAULT '[]',
+    dietary_restrictions TEXT,
+    activity_level VARCHAR(100),
+    follow_up_instructions TEXT,
+    estimated_discharge_date DATE,
+    status VARCHAR(20) DEFAULT 'active' CHECK (status IN ('active', 'completed', 'modified', 'cancelled')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+```sql
+-- Audit logs (HIPAA compliance)
+CREATE TABLE audit_logs (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    patient_id INTEGER REFERENCES patients(id),
+    action VARCHAR(50) NOT NULL, -- 'create', 'read', 'update', 'delete'
+    entity_type VARCHAR(50) NOT NULL, -- 'patient', 'note', 'vitals', 'treatment_plan'
+    entity_id INTEGER,
+    old_values JSONB,
+    new_values JSONB,
+    ip_address INET,
+    user_agent TEXT,
+    session_id VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+```sql
+-- Sessions for user management
+CREATE TABLE user_sessions (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    session_token VARCHAR(255) UNIQUE NOT NULL,
+    ip_address INET,
+    user_agent TEXT,
+    expires_at TIMESTAMP NOT NULL,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+```sql
+-- Indexes for performance
+CREATE INDEX idx_patients_mrn ON patients(medical_record_number);
+CREATE INDEX idx_patients_status ON patients(status);
+CREATE INDEX idx_care_teams_patient ON care_teams(patient_id);
+CREATE INDEX idx_care_teams_user ON care_teams(user_id);
+CREATE INDEX idx_notes_patient ON patient_notes(patient_id);
+CREATE INDEX idx_notes_author ON patient_notes(author_id);
+CREATE INDEX idx_notes_type ON patient_notes(note_type);
+CREATE INDEX idx_vitals_patient ON vital_signs(patient_id);
+CREATE INDEX idx_vitals_recorded_at ON vital_signs(recorded_at);
+CREATE INDEX idx_treatment_plans_patient ON treatment_plans(patient_id);
+CREATE INDEX idx_audit_logs_user ON audit_logs(user_id);
+CREATE INDEX idx_audit_logs_patient ON audit_logs(patient_id);
+CREATE INDEX idx_audit_logs_created ON audit_logs(created_at);
+CREATE INDEX idx_sessions_user ON user_sessions(user_id);
+CREATE INDEX idx_sessions_token ON user_sessions(session_token);
+```
+
+```sql
+-- Triggers for updated_at timestamps
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+```
+
+## 🔧 API Documentation
+
+### Authentication Endpoints
+```
+POST /api/auth/login     - User login
+POST /api/auth/logout    - User logout  
+POST /api/auth/refresh   - Refresh token
+```
+
+### Patient Management
+```
+GET    /api/patients           - Get all patients
+GET    /api/patients/:id       - Get patient by ID
+POST   /api/patients           - Create new patient
+PUT    /api/patients/:id       - Update patient
+DELETE /api/patients/:id       - Delete patient
+```
+
+### Vitals Management
+```
+GET    /api/vitals/:patientId  - Get patient vitals
+POST   /api/vitals             - Record new vitals
+PUT    /api/vitals/:id         - Update vitals
+```
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+npm test
+
+# Run with coverage
+npm run test:coverage
+
+# Run specific test file
+npm test -- --testNamePattern="Patient"
+```
+
+## 🚀 Deployment
+
+Using Netlify (Frontend)
+Using Render (Backend)
+
+
+## 👨‍💻 Author
+Ibukunoluwa  Arotiba
+
+GitHub: <https://github.com/IbkArotiba>
+LinkedIn: <http://linkedin.com/in/ibukunoluwa-a-62ab3b237>
+Email: ibukunarotiba19@gmail.com
