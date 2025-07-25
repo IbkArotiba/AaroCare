@@ -153,10 +153,10 @@ const Dashboard = () => {
       setLoading(true);
        
       const [patientsRes, admissionsRes, dischargesRes, criticalRes] = await Promise.all([
-        apiClient.get('/statistics/patients/total'),
-        apiClient.get('/statistics/patients/admissions'),
-        apiClient.get('/statistics/patients/discharged'),
-        apiClient.get('/statistics/patients/critical')   
+        apiClient.get('api/statistics/patients/total'),
+        apiClient.get('api/statistics/patients/admissions'),
+        apiClient.get('api/statistics/patients/discharged'),
+        apiClient.get('api/statistics/patients/critical')   
       ]);
       
       setPatients(patientsRes.data.total || 0);
