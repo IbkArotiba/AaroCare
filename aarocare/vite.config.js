@@ -23,7 +23,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'https://aarocare.onrender.com',
+        target: 'https://aarocare.onrender.com' || 'http://localhost:5001',
         changeOrigin: true,
         secure: false,
         configure: (proxy, options) => {

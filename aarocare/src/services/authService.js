@@ -1,4 +1,3 @@
-// src/services/authService.js
 import axios from 'axios';
 
 const API_URL = 'https://aarocare.onrender.com/api';
@@ -15,7 +14,6 @@ const api = axios.create({
   withCredentials: true
 });
 
-// Add detailed debugging to requests
 api.interceptors.request.use(async (config) => {
   const fullUrl = config.baseURL + config.url;
   console.log('🔍 REQUEST DEBUG:');
@@ -36,7 +34,6 @@ api.interceptors.request.use(async (config) => {
   }
 });
 
-// Add response debugging
 api.interceptors.response.use(
   (response) => {
     console.log('🔍 RESPONSE SUCCESS:', response.status, response.config.url);
@@ -62,7 +59,6 @@ export const authService = {
         password,
       });
       
-      // Store tokens
       const { user, accessToken, refreshToken } = response.data;
       localStorage.setItem('authToken', accessToken);
       if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
