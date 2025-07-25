@@ -13,6 +13,7 @@ A demo account is available for testing. Please contact the project team for cre
 
 
 
+<a id="demo"></a>
 ## 🎬 Demo
 ![AaroCare Demo](./demos/ezgif.com-crop.gif)
 
@@ -28,6 +29,7 @@ A demo account is available for testing. Please contact the project team for cre
 - [📄 License](#license)
 - [👨‍💻 Author](#author)
 
+<a id="features"></a>
 ## ✨ Features
 
 ### 🏥 Core Healthcare Management
@@ -47,6 +49,7 @@ A demo account is available for testing. Please contact the project team for cre
 - **WebSocket Integration** - Real-time updates across the platform
 - **Mobile Responsive** - Works seamlessly on all devices
 
+<a id="architecture"></a>
 ## 🏗️ Architecture
 
 ### Frontend
@@ -80,6 +83,7 @@ A demo account is available for testing. Please contact the project team for cre
 │  Authentication │
 └─────────────────┘
 
+<a id="quick-start"></a>
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -138,6 +142,7 @@ npm run dev
 This repository does not contain any sensitive information. All API keys, database credentials, and other secrets should be provided via environment variables and are not committed to version control.
 
 
+<a id="database-schema"></a>
 ## 📊 Database Schema
 
 The database schema is as follows:
@@ -328,6 +333,7 @@ END;
 $$ language 'plpgsql';
 ```
 
+<a id="api-documentation"></a>
 ## 🔧 API Documentation
 
 ### Authentication Endpoints
@@ -353,6 +359,7 @@ POST   /api/vitals             - Record new vitals
 PUT    /api/vitals/:id         - Update vitals
 ```
 
+<a id="testing"></a>
 ## 🧪 Testing
 
 ```bash
@@ -366,12 +373,14 @@ npm run test:coverage
 npm test -- --testNamePattern="Patient"
 ```
 
+<a id="deployment"></a>
 ## 🚀 Deployment
 
 Using Netlify (Frontend)
 Using Render (Backend)
 
 
+<a id="author"></a>
 ## 👨‍💻 Author
 Ibukunoluwa  Arotiba
 
