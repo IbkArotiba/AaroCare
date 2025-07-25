@@ -1,10 +1,10 @@
-# Aarọ Care
-
-A healthcare management application for streamlined patient care and team coordination.
-
 <div align="center">
   <img src="./aarocare/src/components/auth/Logo.jpeg" alt="AaroCare Logo" width="200"/>
 </div>
+
+# Aarọ Care
+
+A healthcare management application for streamlined patient care and team coordination.
 
 Link to the live demo: https://aarocare.netlify.app
 **Demo Access**:
